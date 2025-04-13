@@ -45,4 +45,30 @@ describe('Product API', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBeGreaterThan(0);
   });
+
+  it('should retrieve a product by ID', async () => {
+    const product = await Product.create({ name: 'Item', price: 15 });
+    const res = await request(app).get(`/api/products/${product._id}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.name).toBe('Item');
+  });
+
+  it('should update a product', async () => {
+    const product = await Product.create({ name: 'Item', price: 15 });
+    const res = await request(app).put(`/api/products/${product._id}`).send({
+      name: 'Updated Item',
+      price: 20
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.name).toBe('Updated Item');
+    expect(res.body.price).toBe(20);
+  });
+
+  it('should delete a product', async () => {
+    const product = await Product.create({ name: 'Item', price: 15 });
+    const res = await request(app).delete(`/api/products/${product._id}`);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toMatch(/deleted/i);
+  });
 });

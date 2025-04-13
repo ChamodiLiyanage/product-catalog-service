@@ -11,7 +11,16 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testTimeout": 30000
+    "testTimeout": 30000,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["lcov", "text"],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/server.js",
+      "<rootDir>/src/config/db.js"
+    ]
   },
   "lint-staged": {
     "**/*.js": [
