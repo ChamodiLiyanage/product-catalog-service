@@ -12,7 +12,7 @@ beforeAll(async () => {
 
   await mongoose.connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   });
 });
 
@@ -28,19 +28,19 @@ afterEach(async () => {
 describe('Product API', () => {
   it('should create a product', async () => {
     const res = await request(app).post('/api/products').send({
-      name: "Memory Mouse",
-      description: "In-memory test",
+      name: 'Memory Mouse',
+      description: 'In-memory test',
       price: 9.99,
-      category: "Testing",
-      stock: 20,
+      category: 'Testing',
+      stock: 20
     });
 
     expect(res.statusCode).toBe(201);
-    expect(res.body.name).toBe("Memory Mouse");
+    expect(res.body.name).toBe('Memory Mouse');
   });
 
   it('should retrieve all products', async () => {
-    await Product.create({ name: "Item", price: 10 });
+    await Product.create({ name: 'Item', price: 10 });
     const res = await request(app).get('/api/products');
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBeGreaterThan(0);

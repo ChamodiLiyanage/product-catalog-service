@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const productController = require("../controllers/productController");
+const productController = require('../controllers/productController');
 
 /**
  * @swagger
@@ -36,7 +36,7 @@ const productController = require("../controllers/productController");
  *       201:
  *         description: Product created
  */
-router.post("/", productController.createProduct);
+router.post('/', productController.createProduct);
 
 /**
  * @swagger
@@ -54,7 +54,7 @@ router.post("/", productController.createProduct);
  *               items:
  *                 type: object
  */
-router.get("/", productController.getAllProducts);
+router.get('/', productController.getAllProducts);
 
 /**
  * @swagger
@@ -75,7 +75,7 @@ router.get("/", productController.getAllProducts);
  *       404:
  *         description: Product not found
  */
-router.get("/:id", productController.getProductById);
+router.get('/:id', productController.getProductById);
 
 /**
  * @swagger
@@ -113,7 +113,7 @@ router.get("/:id", productController.getProductById);
  *       404:
  *         description: Product not found
  */
-router.put("/:id", productController.updateProduct);
+router.put('/:id', productController.updateProduct);
 
 /**
  * @swagger
@@ -134,6 +134,6 @@ router.put("/:id", productController.updateProduct);
  *       404:
  *         description: Product not found
  */
-router.delete("/:id", productController.deleteProduct);
+router.delete('/:id', productController.deleteProduct);
 
 module.exports = router;
