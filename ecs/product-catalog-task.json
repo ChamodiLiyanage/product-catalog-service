@@ -22,7 +22,7 @@
                 },
                 {
                     "name": "MONGO_URI",
-                    "value": "mongodb+srv://chamzii05111:chamodi12345@cluster0.0b8vfry.mongodb.net/product_catalog_service"
+                    "value": ""
                 }
             ],
             "environmentFiles": [],
