@@ -32,7 +32,7 @@ jobs:
         run: npx eslint .
 
       - name: Run Prettier check
-        run: npx prettier . --check
+        run: npx prettier . --write
 
       - name: Run tests with coverage
         run: npm run coverage
