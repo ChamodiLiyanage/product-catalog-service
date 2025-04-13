@@ -46,35 +46,3 @@ jobs:
         docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-    - name: Deploy to Amazon ECS
-      env:
-        CLUSTER_NAME: product-catalog-cluster
-        SERVICE_NAME: product-catalog-service
-        TASK_FAMILY: product-catalog-task
-        CONTAINER_NAME: product-catalog
-        IMAGE_URI: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
-      run: |
-        echo "Fetching current task definition..."
-        TASK_DEF_JSON=$(aws ecs describe-task-definition --task-definition $TASK_FAMILY)
-
-        echo "Updating image URI in task definition..."
-        NEW_TASK_DEF=$(echo $TASK_DEF_JSON | jq --arg IMAGE "$IMAGE_URI" \
-          '.taskDefinition | 
-          {family: .family, 
-           containerDefinitions: [.containerDefinitions[] | 
-              .image = $IMAGE | 
-              {name, image, cpu, memory, portMappings, essential, environment}
-            ], 
-           requiresCompatibilities: .requiresCompatibilities, 
-           networkMode: .networkMode, 
-           cpu: .cpu, 
-           memory: .memory, 
-           executionRoleArn: .executionRoleArn, 
-           taskRoleArn: .taskRoleArn}')
-
-        echo "Registering new task definition..."
-        NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEF" --query "taskDefinition.taskDefinitionArn" --output text)
-
-        echo "Updating service to use new task definition..."
-        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --task-definition $NEW_TASK_DEF_ARN
-

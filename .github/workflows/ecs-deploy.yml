@@ -1,0 +1,51 @@
+name: Deploy to Amazon ECS
+
+on:
+  workflow_run:
+    workflows: ['Build, Test, and Deploy to ECR']
+    types:
+      - completed
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: product-catalog-service
+  ECS_SERVICE: product-catalog-service
+  ECS_CLUSTER: product-catalog-cluster
+  ECS_TASK_DEFINITION: ecs/product-catalog-task.json
+  CONTAINER_NAME: product-catalog
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Fill in the new image ID in ECS task definition
+        id: render-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ secrets.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
