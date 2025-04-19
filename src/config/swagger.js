@@ -17,10 +17,6 @@ const options = {
   apis: ['./src/routes/*.js'] // path to your route files
 };
 
-function example() {
-  let unusedVar = '';
-}
-
 const swaggerSpec = swaggerJsdoc(options);
 
 module.exports = swaggerSpec;
