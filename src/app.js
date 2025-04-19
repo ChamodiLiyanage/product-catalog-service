@@ -16,7 +16,6 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
-//test commit
 app.use('/api/products', productRoutes);
 
 module.exports = app;
