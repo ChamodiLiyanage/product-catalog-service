@@ -1,3 +1,6 @@
+#!/bin/bash
+
+cat << 'EOF' > README.md
 # 🛍️ Product Catalog Microservice
 
 This repository contains a Node.js and Express-based microservice designed to manage a product catalog for an e-commerce platform. It supports full CRUD operations, integrates with MongoDB, and is containerized using Docker for seamless deployment on cloud platforms. The project adheres to modern DevOps practices, including CI/CD pipelines and security integrations.
@@ -205,3 +208,6 @@ Feel free to fork the repo and create PRs for improvements or bug fixes.
 
 *This README was generated for the Cloud Computing Assignment of the SE4010 module at SLIIT.*
 
+EOF
+
+echo "✅ README.md generated successfully."
