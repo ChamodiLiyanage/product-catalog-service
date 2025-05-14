@@ -43,33 +43,33 @@ The service is containerized using Docker and deployed on AWS ECS, ensuring scal
 
 1. **Clone the repository:**
 
-   \`\`\`bash
+   ```bash
    git clone https://github.com/ChamodiLiyanage/product-catalog-service.git
    cd product-catalog-service
-   \`\`\`
+   ```
 
 2. **Install dependencies:**
 
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
 
 3. **Configure environment variables:**
 
    Create a `.env` file in the root directory and add the following:
 
-   \`\`\`env
-   PORT=3000
+   ```env
+   PORT=5000
    MONGODB_URI=mongodb://localhost:27017/product_catalog
-   \`\`\`
+   ```
 
 4. **Run the application:**
 
-   \`\`\`bash
+   ```bash
    npm start
-   \`\`\`
+   ```
 
-The service will be accessible at `http://localhost:3000`.
+The service will be accessible at `http://localhost:5000`.
 
 ---
 
@@ -77,9 +77,9 @@ The service will be accessible at `http://localhost:3000`.
 
 To execute unit tests:
 
-\`\`\`bash
+```bash
 npm test
-\`\`\`
+```
 
 ---
 
@@ -87,9 +87,9 @@ npm test
 
 Interactive API documentation is available via Swagger UI:
 
-\`\`\`
-http://localhost:3000/api-docs
-\`\`\`
+```
+http://localhost:5000/api-docs
+```
 
 ---
 
@@ -97,23 +97,23 @@ http://localhost:3000/api-docs
 
 ### Build Docker Image
 
-\`\`\`bash
+```bash
 docker build -t product-catalog-service .
-\`\`\`
+```
 
 ### Run Docker Container
 
-\`\`\`bash
-docker run -d -p 3000:3000 --env-file .env product-catalog-service
-\`\`\`
+```bash
+docker run -d -p 5000:5000 --env-file .env product-catalog-service
+```
 
 ### Docker Compose
 
 Alternatively, use Docker Compose:
 
-\`\`\`bash
+```bash
 docker-compose up -d
-\`\`\`
+```
 
 ---
 
@@ -154,7 +154,7 @@ CI/CD pipeline using GitHub Actions:
 
 ## 📂 Project Structure
 
-\`\`\`
+```
 product-catalog-service/
 ├── src/
 │   ├── controllers/
@@ -168,7 +168,7 @@ product-catalog-service/
 ├── package.json
 ├── README.md
 └── sonar-project.properties
-\`\`\`
+```
 
 ---
 
